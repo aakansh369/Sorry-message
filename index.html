@@ -3,95 +3,147 @@
 <head>
 <title>For You ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  font-family:Poppins;
   height:100vh;
-  background: linear-gradient(45deg,#ff9a9e,#fad0c4);
   overflow:hidden;
+  font-family:Poppins;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffb199);
+}
+
+/* Floating BIG hearts */
+.heart{
+  position:absolute;
+  bottom:-50px;
+  font-size:40px;
+  animation:float 7s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0) scale(0.8);}
+  100%{transform:translateY(-120vh) scale(1.5);}
+}
+
+/* CARD FLIP */
+.scene{
+  width:350px;
+  height:450px;
+  perspective:1000px;
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+}
+.card{
+  width:100%; height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:1.2s;
+}
+.card.flip{
+  transform:rotateY(180deg);
+}
+.face{
+  position:absolute;
+  width:100%; height:100%;
+  backface-visibility:hidden;
+  border-radius:20px;
+  box-shadow:0 0 40px rgba(0,0,0,0.3);
   display:flex;
   justify-content:center;
   align-items:center;
   text-align:center;
-  color:white;
+  padding:25px;
 }
 
-/* MAIN BOX */
-.container{
-  z-index:2;
-}
-
-h1{
-  font-size:55px;
-  margin:0;
-}
-
-#typing{
-  font-size:28px;
-  margin-top:20px;
-  min-height:40px;
-}
-
-/* Floating hearts */
-.heart{
-  position:absolute;
-  bottom:-20px;
+/* FRONT */
+.front{
+  background:white;
+  font-family:"Great Vibes";
+  font-size:40px;
   color:#ff4d6d;
-  font-size:20px;
-  animation: float 6s linear infinite;
+  cursor:pointer;
 }
 
-@keyframes float{
-  0%{transform:translateY(0) rotate(0);}
-  100%{transform:translateY(-110vh) rotate(360deg);}
+/* BACK MESSAGE */
+.back{
+  background:white;
+  transform:rotateY(180deg);
+  font-size:20px;
+  line-height:1.6;
 }
+
+/* Typing text */
+#msg{
+  border-right:2px solid black;
+  padding-right:5px;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- Background Music -->
+<!-- Romantic Music -->
 <audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=romantic-love-11786.mp3" type="audio/mp3">
 </audio>
 
-<div class="container">
-  <h1>I LOVE YOU ❤️</h1>
-  <div id="typing"></div>
+<!-- Card -->
+<div class="scene">
+  <div class="card" id="card">
+    <div class="face front" onclick="flipCard()">
+      Click Here ❤️
+    </div>
+
+    <div class="face back">
+      <div id="msg"></div>
+    </div>
+  </div>
 </div>
 
 <script>
+// Flip card
+function flipCard(){
+  document.getElementById("card").classList.add("flip");
+  typeMsg();
+}
+
 // Typing message
-let msg = "Sorry meri jaan 🥺\nMujhse galti ho gayi...\nPlease gussa mat ho ❤️\nYou mean everything to me 💖";
+let text=`Sorry yrrr 🥺...
+Jo maine tereko aese bola aur situation galat handle ki...
+
+Main hun tera ❤️
+Aur tu hai meri 💖
+Tere nakhre, gussa sab main hi handle karunga 😌
+
+Aage se aisa kabhi nahi hoga
+PAKKA PINKY PROMISE 🤞💕
+
+Again sorry 😔
+I LOVE YOU MERE BABU 🥺💋`;
+
 let i=0;
-function typing(){
-  if(i < msg.length){
-    document.getElementById("typing").innerHTML += msg.charAt(i);
+function typeMsg(){
+  if(i<text.length){
+    document.getElementById("msg").innerHTML+=text.charAt(i);
     i++;
-    setTimeout(typing,60);
+    setTimeout(typeMsg,40);
   }
 }
-typing();
 
-// popup after open
-setTimeout(()=>{
-  alert("Sorry meri jaan 🥺💖");
-},800);
-
-// floating hearts generator
+// Floating hearts generator
 function hearts(){
-  let heart = document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML="💖";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.fontSize=(Math.random()*20+10)+"px";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),6000);
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(Math.random()*30+30)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
 }
-setInterval(hearts,300);
+setInterval(hearts,250);
 </script>
 
 </body>
